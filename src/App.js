@@ -56,7 +56,7 @@ class App extends Component {
   renderAccordionItem(asset, index) {
     return (
       <List.Item key={index} index={index} onClick={this.handleClick}>
-        <Icon name='building outline' />
+        <Icon name={asset.icon} />
         <List.Content>
           <List.Header>{asset.name}</List.Header>
           <List.Description>{asset.description}</List.Description>
