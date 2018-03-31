@@ -2,7 +2,7 @@ import _ from 'lodash';
 import './App.css';
 
 import React, { Component } from 'react';
-import { Button, Accordion, Icon } from 'semantic-ui-react';
+import { Button, List, Icon } from 'semantic-ui-react';
 
 import Portfolio from './Portfolio.js';
 import MultiBuildingAsset from './MultiBuildingAsset';
@@ -37,37 +37,35 @@ class App extends Component {
       <div className='container'>
         <div className='list'>
           Currently selected asset: {this.state.assetSelection.name}
-          <Accordion>
-            { this.renderAccordionItems() }
-          </Accordion>
+          { this.renderAssetSelectionList() }
         </div>
       </div>
     );
   }
 
-  renderAccordionItems() {
-    return userAssets.map((asset, i) => this.renderAccordionItem(asset, i));
+  renderAssetSelectionList() {
+    return (
+      <List>
+        {userAssets.map((asset, i) => this.renderAccordionItem(asset, i))}
+      </List>
+    );
   }
 
   renderAccordionItem(asset, index) {
     return (
-      <div key={index}>
-        <Accordion.Title active={this.isAccordionItemActive(index)} index={index} onClick={this.handleClick}>
-          <Icon name='dropdown' />
-          {asset.name}
-        </Accordion.Title>
-        <Accordion.Content active={this.isAccordionItemActive(index)}>{asset.description}</Accordion.Content>
-      </div>
+      <List.Item key={index} index={index} onClick={this.handleClick}>
+        <Icon name='building outline' />
+        <List.Content>
+          <List.Header>{asset.name}</List.Header>
+          <List.Description>{asset.description}</List.Description>
+        </List.Content>
+      </List.Item>
     );
   }
 
-  isAccordionItemActive(index) {
-    return this.state.activeIndex === index;
-  }
-
-  handleClick(e, titleProps) {
+  handleClick(e, listItemProps) {
     this.setState((prevState, props) => {
-      const { index } = titleProps;
+      const { index } = listItemProps;
       const { activeIndex } = prevState;
       const newIndex = activeIndex === index ? -1 : index;
 
