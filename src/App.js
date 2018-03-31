@@ -13,6 +13,18 @@ const userAssets = [
   new MultiBuildingAsset('1204 6th Avenue', 'New York, NY')
 ];
 
+const homeAsset = {
+  name: 'Home'
+};
+
+function assetAt(index) {
+  if (index >= 0) {
+    return userAssets[index]
+  }
+
+  return homeAsset;
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -59,7 +71,7 @@ class App extends Component {
       const { activeIndex } = prevState;
       const newIndex = activeIndex === index ? -1 : index;
 
-      return { activeIndex: newIndex, assetSelection: userAssets[newIndex] }
+      return { activeIndex: newIndex, assetSelection: assetAt(newIndex)}
     });
   }
 }
