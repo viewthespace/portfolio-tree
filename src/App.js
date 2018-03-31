@@ -2,7 +2,7 @@ import _ from 'lodash';
 import './App.css';
 
 import React, { Component } from 'react';
-import { Button, List, Icon } from 'semantic-ui-react';
+import { Button, List, Icon, Grid } from 'semantic-ui-react';
 
 import Portfolio from './Portfolio.js';
 import MultiBuildingAsset from './MultiBuildingAsset';
@@ -34,18 +34,20 @@ class App extends Component {
 
   render() {
     return (
-      <div className='container'>
-        <div className='list'>
+      <Grid container centered>
+        <Grid.Row centered>
           Currently selected asset: {this.state.assetSelection.name}
+        </Grid.Row>
+        <Grid.Row centered>
           { this.renderAssetSelectionList() }
-        </div>
-      </div>
+        </Grid.Row>
+      </Grid>
     );
   }
 
   renderAssetSelectionList() {
     return (
-      <List>
+      <List size='big'>
         {userAssets.map((asset, i) => this.renderAccordionItem(asset, i))}
       </List>
     );
