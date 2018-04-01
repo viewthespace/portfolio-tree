@@ -5,7 +5,8 @@ export default class Portfolio {
   constructor(name, description) {
     this.name = name;
     this.description = description;
-    this.icon = "globe";
+    this.icon = 'globe';
+    this.color = 'blue'
 
     this.children = [
       new SingleBuildingAsset('14 24th St.', 'Los Angeles, CA'),

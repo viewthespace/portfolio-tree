@@ -2,7 +2,7 @@ import _ from 'lodash';
 import './App.css';
 
 import React, { Component } from 'react';
-import { Button, Grid, Header, List } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Item, Label, List } from 'semantic-ui-react';
 
 import Portfolio from './Portfolio.js';
 import MultiBuildingAsset from './MultiBuildingAsset.js';
@@ -34,12 +34,12 @@ class App extends Component {
     return (
       <Grid container centered>
         <Grid.Row centered>
-          <Header as='h2'>
-            Current selection: {this.state.assetSelection.name}
-          </Header>
+          <Label as='h2' color='purple' size='huge'>
+            {this.state.assetSelection.name}
+          </Label>
         </Grid.Row>
+        { this.renderParentHeader() }
         <Grid.Row centered>
-          { this.renderBackButton() }
           { this.renderAssetSelectionList(this.state.assetSelections) }
         </Grid.Row>
       </Grid>
@@ -56,11 +56,11 @@ class App extends Component {
 
   renderListItem(asset, index) {
     return (
-      <List.Item key={index} index={index} onClick={this.handleClick}>
+      <List.Item key={index} className='asset-list-item' index={index} onClick={this.handleClick}>
         <List.Content floated='right'>
           { this.renderDrillButton(asset, index) }
         </List.Content>
-        <List.Icon name={asset.icon} verticalAlign='middle' />
+        <List.Icon name={asset.icon} verticalAlign='middle' color={asset.color}/>
         <List.Content>
           <List.Header>{asset.name}</List.Header>
           <List.Description>{asset.description}</List.Description>
@@ -69,10 +69,22 @@ class App extends Component {
     );
   }
 
-  renderBackButton() {
-    if (this.state.selectionPath.length > 0) {
-      return <Button icon="chevron left" size='large' onClick={this.drillBack} />;
+  renderParentHeader() {
+    if (this.state.selectionPath.length <= 0) {
+      return;
     }
+
+
+    return (
+      <Grid.Row centered columns={2}>
+        <Grid.Column>
+          <Button icon="chevron left" size='large' onClick={this.drillBack} />
+        </Grid.Column>
+        <Grid.Column>
+          <Header as='h2'>{_.last(this.state.selectionPath).name}</Header>
+        </Grid.Column>
+      </Grid.Row>
+    );
   }
 
   renderDrillButton(asset, index) {
