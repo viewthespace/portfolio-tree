@@ -115,8 +115,6 @@ class App extends Component {
     this.setState((prevState, props) => {
       let newSelectionPath = prevState.selectionPath;
       newSelectionPath.pop();
-      console.log("going to depth: ")
-      console.log(newSelectionPath.length);
       return Object.assign(
         {},
         prevState,
