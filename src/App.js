@@ -2,15 +2,19 @@ import _ from 'lodash';
 import './App.css';
 
 import React, { Component } from 'react';
-import { Button, List, Grid } from 'semantic-ui-react';
+import { Button, Grid, Header, List } from 'semantic-ui-react';
 
 import Portfolio from './Portfolio.js';
 import MultiBuildingAsset from './MultiBuildingAsset.js';
+import SingleBuildingAsset from './SingleBuildingAsset.js'
 
 const userAssets = [
   new Portfolio('East Coast', '13 Assets'),
   new Portfolio('West Coast', '55 Assets'),
-  new MultiBuildingAsset('1204 6th Avenue', 'New York, NY')
+  new MultiBuildingAsset('1204 6th Avenue', 'New York, NY'),
+  new SingleBuildingAsset('114 W 41 St.', 'New York, NY'),
+  new MultiBuildingAsset('1204 6th Avenue', 'New York, NY'),
+  new SingleBuildingAsset('114 W 41 St.', 'New York, NY')
 ];
 
 class App extends Component {
@@ -30,7 +34,9 @@ class App extends Component {
     return (
       <Grid container centered>
         <Grid.Row centered>
-          Currently selected asset: {this.state.assetSelection.name}
+          <Header as='h2'>
+            Current selection: {this.state.assetSelection.name}
+          </Header>
         </Grid.Row>
         <Grid.Row centered>
           { this.renderBackButton() }
@@ -42,7 +48,7 @@ class App extends Component {
 
   renderAssetSelectionList(assetSelections) {
     return (
-      <List size='big'>
+      <List size='huge'>
         {assetSelections.map((asset, i) => this.renderListItem(asset, i))}
       </List>
     );
@@ -59,14 +65,13 @@ class App extends Component {
           <List.Header>{asset.name}</List.Header>
           <List.Description>{asset.description}</List.Description>
         </List.Content>
-
       </List.Item>
     );
   }
 
   renderBackButton() {
     if (this.state.selectionPath.length > 0) {
-      return <Button icon="chevron left" onClick={this.drillBack} />;
+      return <Button icon="chevron left" size='large' onClick={this.drillBack} />;
     }
   }
 
@@ -74,6 +79,7 @@ class App extends Component {
     if (asset.children) {
       return <Button
         icon='chevron right'
+        size='huge'
         index={index}
         onClick={this.drillInto}
       />
