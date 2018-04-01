@@ -51,12 +51,15 @@ class App extends Component {
   renderListItem(asset, index) {
     return (
       <List.Item key={index} index={index} onClick={this.handleClick}>
+        <List.Content floated='right'>
+          { this.renderDrillButton(asset, index) }
+        </List.Content>
         <List.Icon name={asset.icon} verticalAlign='middle' />
         <List.Content>
           <List.Header>{asset.name}</List.Header>
           <List.Description>{asset.description}</List.Description>
-          { this.renderDrillButton(asset, index) }
         </List.Content>
+
       </List.Item>
     );
   }
