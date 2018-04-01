@@ -17,22 +17,13 @@ const homeAsset = {
   name: 'Home'
 };
 
-function assetAt(index) {
-  if (index >= 0) {
-    return userAssets[index];
-  }
-
-  return homeAsset;
-}
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       assetSelection: { name: 'Home' } ,
       assetSelections: userAssets,
-      selectionPath: [],
-      drillDepth: 0
+      selectionPath: []
     };
     this.handleClick = this.handleClick.bind(this);
     this.drillInto = this.drillInto.bind(this);
@@ -68,65 +59,74 @@ class App extends Component {
         <List.Content>
           <List.Header>{asset.name}</List.Header>
           <List.Description>{asset.description}</List.Description>
+          { this.renderDrillButton(asset, index) }
         </List.Content>
-        <List.Icon
-          name='chevron right'
-          index={index}
-          verticalAlign='middle'
-          onClick={this.drillInto}
-        />
       </List.Item>
     );
   }
 
   renderBackButton() {
-    if (this.state.drillDepth > 0) {
+    if (this.state.selectionPath.length > 0) {
       return <Button icon="chevron left" onClick={this.drillBack} />;
+    }
+  }
+
+  renderDrillButton(asset, index) {
+    if (asset.children) {
+      return <Button
+        icon='chevron right'
+        index={index}
+        onClick={this.drillInto}
+      />
     }
   }
 
   handleClick(e, listItemProps) {
     this.setState((prevState, props) => {
-      const { index } = listItemProps;
-
       return {
-        assetSelection: assetAt(index)
+        assetSelection: this.assetAt(listItemProps.index)
       }
     });
   }
 
   drillInto(e, drillProps) {
     e.stopPropagation();
-    debugger;
     this.setState((prevState, props) => {
-      let drillSelections = this.assetSelectionsFor(prevState.drillDepth);
+      let drillSelections = this.assetSelectionsFor(prevState.selectionPath.length);
+      let selection = drillSelections[drillProps.index];
+      let newSelectionPath = prevState.selectionPath;
+      newSelectionPath.push(selection);
       return Object.assign({}, prevState, {
-        assetSelections: drillSelections.children,
-        selectionPath: prevState.selectionPath.push(drillSelections[drillProps.index]),
-        drillDepth: prevState.drillDepth + 1
+        assetSelections: selection.children,
+        selectionPath: newSelectionPath
       });
     });
   }
 
   assetSelectionsFor(depth) {
-    if (this.state.drillDepth === 0) {
+    if (depth === 0) {
       return userAssets;
     }
 
     return _.last(this.state.selectionPath).children;
   }
 
+  assetAt(index) {
+    return this.state.assetSelections[index];
+  }
+
   drillBack() {
     this.setState((prevState, props) => {
-      let newSelectionPath = prevState;
+      let newSelectionPath = prevState.selectionPath;
       newSelectionPath.pop();
+      console.log("going to depth: ")
+      console.log(newSelectionPath.length);
       return Object.assign(
         {},
         prevState,
         {
           assetSelections: this.assetSelectionsFor(newSelectionPath.length),
-          selectionPath: newSelectionPath,
-          drillDepth: prevState.drillDepth - 1
+          selectionPath: newSelectionPath
         }
       );
     });
