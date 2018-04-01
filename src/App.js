@@ -13,10 +13,6 @@ const userAssets = [
   new MultiBuildingAsset('1204 6th Avenue', 'New York, NY')
 ];
 
-const homeAsset = {
-  name: 'Home'
-};
-
 class App extends Component {
   constructor(props) {
     super(props);

@@ -7,7 +7,9 @@ export default class MultiBuildingAsset {
     this.icon = "cubes";
 
     this.children = [
-      new SingleBuildingAsset('1204A 6th Avenue', 'New York, NY')
+      new SingleBuildingAsset('1204A 6th Avenue', 'New York, NY'),
+      new SingleBuildingAsset('1204B 6th Avenue', 'New York, NY'),
+      new SingleBuildingAsset('1204C 6th Avenue', 'New York, NY')
     ];
   }
 }
