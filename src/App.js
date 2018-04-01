@@ -56,12 +56,12 @@ class App extends Component {
   renderAssetSelectionList(assetSelections) {
     return (
       <List size='big'>
-        {assetSelections.map((asset, i) => this.renderAccordionItem(asset, i))}
+        {assetSelections.map((asset, i) => this.renderListItem(asset, i))}
       </List>
     );
   }
 
-  renderAccordionItem(asset, index) {
+  renderListItem(asset, index) {
     return (
       <List.Item key={index} index={index} onClick={this.handleClick}>
         <List.Icon name={asset.icon} verticalAlign='middle' />
