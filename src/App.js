@@ -2,7 +2,7 @@ import _ from 'lodash';
 import './App.css';
 
 import React, { Component } from 'react';
-import { Button, Container, Grid, Header, Item, Label, List } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Item, List } from 'semantic-ui-react';
 
 import Portfolio from './Portfolio.js';
 import MultiBuildingAsset from './MultiBuildingAsset.js';
@@ -34,9 +34,9 @@ class App extends Component {
     return (
       <Grid container centered>
         <Grid.Row centered>
-          <Label as='h2' color='purple' size='huge'>
+          <Header as='h2' color='purple'>
             {this.state.assetSelection.name}
-          </Label>
+          </Header>
         </Grid.Row>
         { this.renderParentHeader() }
         <Grid.Row centered>
@@ -48,7 +48,7 @@ class App extends Component {
 
   renderAssetSelectionList(assetSelections) {
     return (
-      <List size='huge'>
+      <List divided size='huge'>
         {assetSelections.map((asset, i) => this.renderListItem(asset, i))}
       </List>
     );
