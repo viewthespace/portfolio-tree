@@ -2,7 +2,7 @@ import _ from 'lodash';
 import './App.css';
 
 import React, { Component } from 'react';
-import { Button, Grid, Header, List } from 'semantic-ui-react';
+import { Button, Grid, Header, Item, List } from 'semantic-ui-react';
 
 import Portfolio from './Portfolio.js';
 import MultiBuildingAsset from './MultiBuildingAsset.js';
@@ -76,14 +76,14 @@ class App extends Component {
 
 
     return (
-      <Grid.Row centered columns={2}>
-        <Grid.Column>
-          <Button icon="chevron left" size='large' onClick={this.drillBack} />
-        </Grid.Column>
-        <Grid.Column>
-          <Header as='h2'>{_.last(this.state.selectionPath).name}</Header>
-        </Grid.Column>
-      </Grid.Row>
+      <Item.Group>
+        <Item>
+          <Item.Content>
+            <Button icon="chevron left" size='huge' onClick={this.drillBack} />
+            <Item.Header>{_.last(this.state.selectionPath).name}</Item.Header>
+          </Item.Content>
+        </Item>
+      </Item.Group>
     );
   }
 
