@@ -2,7 +2,7 @@ import _ from 'lodash';
 import './App.css';
 
 import React, { Component } from 'react';
-import { Button, Container, Grid, Header, Item, List } from 'semantic-ui-react';
+import { Button, Grid, Header, List } from 'semantic-ui-react';
 
 import Portfolio from './Portfolio.js';
 import MultiBuildingAsset from './MultiBuildingAsset.js';
