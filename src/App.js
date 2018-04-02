@@ -109,13 +109,13 @@ class App extends Component {
   drillInto(e, drillProps) {
     e.stopPropagation();
     this.setState((prevState, props) => {
-      let drillSelections = this.assetSelectionsFor(prevState.selectionPath.length);
+      const { selectionPath } = prevState;
+      let drillSelections = this.assetSelectionsFor(selectionPath.length);
       let selection = drillSelections[drillProps.index];
-      let newSelectionPath = prevState.selectionPath;
-      newSelectionPath.push(selection);
+      selectionPath.push(selection);
       return Object.assign({}, prevState, {
         assetSelections: selection.children,
-        selectionPath: newSelectionPath
+        selectionPath: selectionPath
       });
     });
   }
@@ -134,16 +134,12 @@ class App extends Component {
 
   drillBack() {
     this.setState((prevState, props) => {
-      let newSelectionPath = prevState.selectionPath;
-      newSelectionPath.pop();
-      return Object.assign(
-        {},
-        prevState,
-        {
-          assetSelections: this.assetSelectionsFor(newSelectionPath.length),
-          selectionPath: newSelectionPath
-        }
-      );
+      const { selectionPath } = prevState;
+      selectionPath.pop();
+      return Object.assign({}, prevState, {
+        assetSelections: this.assetSelectionsFor(selectionPath.length),
+        selectionPath: selectionPath
+      });
     });
   }
 }
