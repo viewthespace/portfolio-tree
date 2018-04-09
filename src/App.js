@@ -1,12 +1,14 @@
-import _ from 'lodash';
+import React, { Component } from 'react';
+
 import './App.css';
 
-import React, { Component } from 'react';
-import { Button, Grid, Header, Item, List } from 'semantic-ui-react';
+import { Button, Grid, Header, List } from 'semantic-ui-react';
+import _ from 'lodash';
 
 import Portfolio from './Portfolio.js';
 import MultiBuildingAsset from './MultiBuildingAsset.js';
-import SingleBuildingAsset from './SingleBuildingAsset.js'
+import SingleBuildingAsset from './SingleBuildingAsset.js';
+import ParentHeader from './ParentHeader.js';
 
 const userAssets = [
   new Portfolio('East Coast', '13 Assets'),
@@ -38,7 +40,7 @@ class App extends Component {
             {this.state.assetSelection.name}
           </Header>
         </Grid.Row>
-        { this.renderParentHeader() }
+        { this.showParentHeader() ? <ParentHeader selectionPath={this.state.selectionPath} drillBack={this.drillBack}/> : null }
         <Grid.Row centered>
           { this.renderAssetSelectionList(this.state.assetSelections) }
         </Grid.Row>
@@ -69,24 +71,6 @@ class App extends Component {
     );
   }
 
-  renderParentHeader() {
-    if (this.state.selectionPath.length <= 0) {
-      return;
-    }
-
-
-    return (
-      <Item.Group>
-        <Item>
-          <Item.Content>
-            <Button icon="chevron left" size='huge' onClick={this.drillBack} />
-            <Item.Header>{_.last(this.state.selectionPath).name}</Item.Header>
-          </Item.Content>
-        </Item>
-      </Item.Group>
-    );
-  }
-
   renderDrillButton(asset, index) {
     if (asset.children) {
       return <Button
@@ -96,6 +80,10 @@ class App extends Component {
         onClick={this.drillInto}
       />
     }
+  }
+
+  showParentHeader() {
+    return this.state.selectionPath.length > 0;
   }
 
   handleClick(e, listItemProps) {
