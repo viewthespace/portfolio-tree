@@ -1,5 +1,5 @@
 import SingleBuildingAsset from './SingleBuildingAsset.js';
-import MultiBuildingAsset from './SingleBuildingAsset.js';
+import MultiBuildingAsset from './MultiBuildingAsset.js';
 
 export default class Portfolio {
   constructor(name, description) {
