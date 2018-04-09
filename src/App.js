@@ -41,10 +41,23 @@ class App extends Component {
             {this.state.assetSelection.name}
           </Header>
         </Grid.Row>
-        { this.showParentHeader() ? <ParentHeader selectionPath={this.state.selectionPath} drillBack={this.drillBack}/> : null }
+        { this.showParentHeader() ?
+          <ParentHeader
+            selectionPath={this.state.selectionPath}
+            drillBack={this.drillBack}
+          /> : null
+        }
         <Grid.Row centered>
           <List divided size='huge'>
-            {this.state.assetSelections.map((asset, i) => <AssetSelectionListItem key={i} asset={asset} index={i} handleClick={this.handleClick} drillInto={this.drillInto} />)}
+            {this.state.assetSelections.map((asset, i) => (
+              <AssetSelectionListItem
+                key={i}
+                asset={asset}
+                index={i}
+                handleClick={this.handleClick}
+                drillInto={this.drillInto}
+              />
+            ))}
           </List>
         </Grid.Row>
       </Grid>
