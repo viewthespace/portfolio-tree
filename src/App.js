@@ -41,32 +41,15 @@ class App extends Component {
           </div>
         </Grid.Row>
         <Grid.Row>
-          {this.showParentHeader() ?
-            <ParentHeader
-              selectionPath={this.state.selectionPath}
-              drillBack={this.drillBack}
-            /> : null
-          }
+          {this.showParentHeader() ? this.renderParentHeader() : null}
         </Grid.Row>
         <Grid.Row>
           <List divided size='huge'>
-            {this.state.assetSelections.map((asset, i) => (
-              <AssetSelectionListItem
-                key={i}
-                asset={asset}
-                index={i}
-                handleClick={this.handleClick}
-                drillInto={this.drillInto}
-              />
-            ))}
+            {this.state.assetSelections.map(this.renderAssetSelectionListItem.bind(this))}
           </List>
         </Grid.Row>
       </Grid>
     );
-  }
-
-  showParentHeader() {
-    return this.state.selectionPath.length > 0;
   }
 
   handleClick(e, listItemProps) {
@@ -100,6 +83,31 @@ class App extends Component {
         selectionPath: selectionPath
       });
     });
+  }
+
+  showParentHeader() {
+    return this.state.selectionPath.length > 0;
+  }
+
+  renderParentHeader() {
+    return (
+      <ParentHeader
+        selectionPath={this.state.selectionPath}
+        drillBack={this.drillBack}
+      />
+    );
+  }
+
+  renderAssetSelectionListItem(asset, i) {
+    return (
+      <AssetSelectionListItem
+        key={i}
+        asset={asset}
+        index={i}
+        handleClick={this.handleClick}
+        drillInto={this.drillInto}
+      />
+    );
   }
 
   assetSelectionsFor(depth) {
