@@ -112,8 +112,6 @@ class App extends Component {
   assetAt(index) {
     return this.state.assetSelections[index];
   }
-
-
 }
 
 export default App;
