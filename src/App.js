@@ -80,8 +80,8 @@ class App extends Component {
     e.stopPropagation();
     this.setState((prevState, props) => {
       const { selectionPath } = prevState;
-      let drillSelections = this.assetSelectionsFor(selectionPath.length);
-      let selection = drillSelections[drillProps.index];
+      let assetSelections = this.assetSelectionsFor(selectionPath.length);
+      let selection = assetSelections[drillProps.index];
       selectionPath.push(selection);
       return Object.assign({}, prevState, {
         assetSelections: selection.children,
