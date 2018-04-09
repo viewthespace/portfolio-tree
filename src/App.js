@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './App.css';
 
-import { Grid, Header, List } from 'semantic-ui-react';
+import { Grid, Label, List } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import AssetSelectionListItem from './AssetSelectionListItem.js';
@@ -33,12 +33,11 @@ class App extends Component {
   render() {
     return (
       <Grid container>
+        <Grid.Row></Grid.Row>
         <Grid.Row>
-          <div className='asset-selection'>
-            <Header as='h2' color='purple'>
-              {this.state.assetSelection.name}
-            </Header>
-          </div>
+          <Label circular color='purple' size='huge'>
+            {this.state.assetSelection.name}
+          </Label>
         </Grid.Row>
         <Grid.Row>
           {this.showParentHeader() ? this.renderParentHeader() : null}
