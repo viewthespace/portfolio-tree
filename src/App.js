@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 
 import './App.css';
 
-import { Button, Grid, Header, List } from 'semantic-ui-react';
+import { Grid, Header, List } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import Portfolio from './Portfolio.js';
+import AssetSelectionListItem from './AssetSelectionListItem.js';
 import MultiBuildingAsset from './MultiBuildingAsset.js';
-import SingleBuildingAsset from './SingleBuildingAsset.js';
 import ParentHeader from './ParentHeader.js';
+import Portfolio from './Portfolio.js';
+import SingleBuildingAsset from './SingleBuildingAsset.js';
 
 const userAssets = [
   new Portfolio('East Coast', '13 Assets'),
@@ -43,37 +44,11 @@ class App extends Component {
         { this.showParentHeader() ? <ParentHeader selectionPath={this.state.selectionPath} drillBack={this.drillBack}/> : null }
         <Grid.Row centered>
           <List divided size='huge'>
-            {this.state.assetSelections.map((asset, i) => this.renderListItem(asset, i))}
+            {this.state.assetSelections.map((asset, i) => <AssetSelectionListItem key={i} asset={asset} index={i} handleClick={this.handleClick} drillInto={this.drillInto} />)}
           </List>
         </Grid.Row>
       </Grid>
     );
-  }
-
-  renderListItem(asset, index) {
-    return (
-      <List.Item key={index} className='asset-list-item' index={index} onClick={this.handleClick}>
-        <List.Content floated='right'>
-          { this.renderDrillButton(asset, index) }
-        </List.Content>
-        <List.Icon name={asset.icon} verticalAlign='middle' color={asset.color}/>
-        <List.Content>
-          <List.Header>{asset.name}</List.Header>
-          <List.Description>{asset.description}</List.Description>
-        </List.Content>
-      </List.Item>
-    );
-  }
-
-  renderDrillButton(asset, index) {
-    if (asset.children) {
-      return <Button
-        icon='chevron right'
-        size='huge'
-        index={index}
-        onClick={this.drillInto}
-      />
-    }
   }
 
   showParentHeader() {
@@ -102,6 +77,17 @@ class App extends Component {
     });
   }
 
+  drillBack() {
+    this.setState((prevState, props) => {
+      const { selectionPath } = prevState;
+      selectionPath.pop();
+      return Object.assign({}, prevState, {
+        assetSelections: this.assetSelectionsFor(selectionPath.length),
+        selectionPath: selectionPath
+      });
+    });
+  }
+
   assetSelectionsFor(depth) {
     if (depth === 0) {
       return userAssets;
@@ -114,16 +100,7 @@ class App extends Component {
     return this.state.assetSelections[index];
   }
 
-  drillBack() {
-    this.setState((prevState, props) => {
-      const { selectionPath } = prevState;
-      selectionPath.pop();
-      return Object.assign({}, prevState, {
-        assetSelections: this.assetSelectionsFor(selectionPath.length),
-        selectionPath: selectionPath
-      });
-    });
-  }
+
 }
 
 export default App;
