@@ -42,17 +42,11 @@ class App extends Component {
         </Grid.Row>
         { this.showParentHeader() ? <ParentHeader selectionPath={this.state.selectionPath} drillBack={this.drillBack}/> : null }
         <Grid.Row centered>
-          { this.renderAssetSelectionList(this.state.assetSelections) }
+          <List divided size='huge'>
+            {this.state.assetSelections.map((asset, i) => this.renderListItem(asset, i))}
+          </List>
         </Grid.Row>
       </Grid>
-    );
-  }
-
-  renderAssetSelectionList(assetSelections) {
-    return (
-      <List divided size='huge'>
-        {assetSelections.map((asset, i) => this.renderListItem(asset, i))}
-      </List>
     );
   }
 
