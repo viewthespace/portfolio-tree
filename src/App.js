@@ -41,12 +41,14 @@ class App extends Component {
             {this.state.assetSelection.name}
           </Header>
         </Grid.Row>
-        { this.showParentHeader() ?
-          <ParentHeader
-            selectionPath={this.state.selectionPath}
-            drillBack={this.drillBack}
-          /> : null
-        }
+        <Grid.Row centered>
+          {this.showParentHeader() ?
+            <ParentHeader
+              selectionPath={this.state.selectionPath}
+              drillBack={this.drillBack}
+            /> : null
+          }
+        </Grid.Row>
         <Grid.Row centered>
           <List divided size='huge'>
             {this.state.assetSelections.map((asset, i) => (
