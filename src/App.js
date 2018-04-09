@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './App.css';
 
-import { Grid, Label, List } from 'semantic-ui-react';
+import { Button, Grid, Label, List } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import AssetSelectionListItem from './AssetSelectionListItem.js';
@@ -17,17 +17,20 @@ const userAssets = [
   new SingleBuildingAsset('114 W 41 St.', 'New York, NY')
 ];
 
+const homeSelection = { name: 'Home' };
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      assetSelection: { name: 'Home' } ,
+      assetSelection: homeSelection,
       assetSelections: userAssets,
       selectionPath: []
     };
     this.handleClick = this.handleClick.bind(this);
     this.drillInto = this.drillInto.bind(this);
     this.drillBack = this.drillBack.bind(this);
+    this.removeAssetSelection = this.removeAssetSelection.bind(this);
   }
 
   render() {
@@ -35,6 +38,7 @@ class App extends Component {
       <Grid container>
         <Grid.Row></Grid.Row>
         <Grid.Row>
+          { this.isHomeSelected() ? null : <Button icon='remove' onClick={this.removeAssetSelection} /> }
           <Label circular color='purple' size='huge'>
             {this.state.assetSelection.name}
           </Label>
@@ -82,6 +86,16 @@ class App extends Component {
         selectionPath: selectionPath
       });
     });
+  }
+
+  isHomeSelected() {
+    return this.state.assetSelection.name === 'Home';
+  }
+
+  removeAssetSelection() {
+    this.setState((prevState, props) => Object.assign({}, prevState, {
+      assetSelection: homeSelection
+    }));
   }
 
   showParentHeader() {
