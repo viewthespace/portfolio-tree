@@ -1,3 +1,7 @@
 .asset-list-item {
   cursor: pointer;
 }
+
+.asset-selection {
+  margin-top: 20px;
+}

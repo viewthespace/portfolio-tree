@@ -32,13 +32,15 @@ class App extends Component {
 
   render() {
     return (
-      <Grid container centered>
-        <Grid.Row centered>
-          <Header as='h2' color='purple'>
-            {this.state.assetSelection.name}
-          </Header>
+      <Grid container>
+        <Grid.Row>
+          <div className='asset-selection'>
+            <Header as='h2' color='purple'>
+              {this.state.assetSelection.name}
+            </Header>
+          </div>
         </Grid.Row>
-        <Grid.Row centered>
+        <Grid.Row>
           {this.showParentHeader() ?
             <ParentHeader
               selectionPath={this.state.selectionPath}
@@ -46,7 +48,7 @@ class App extends Component {
             /> : null
           }
         </Grid.Row>
-        <Grid.Row centered>
+        <Grid.Row>
           <List divided size='huge'>
             {this.state.assetSelections.map((asset, i) => (
               <AssetSelectionListItem
