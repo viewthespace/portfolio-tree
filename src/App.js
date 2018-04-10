@@ -19,6 +19,51 @@ const userAssets = [
 
 const homeSelection = { name: 'Home' };
 
+function selectHome(prevState, props) {
+  return Object.assign({}, prevState, {
+    assetSelection: homeSelection
+  });
+}
+
+function selectAssetAt(index) {
+  return function(prevState, props) {
+    return Object.assign({}, prevState, {
+      assetSelection: prevState.assetSelections[index]
+    });
+  };
+}
+
+function viewChildSelectionsAt(index) {
+  return function(prevState, props) {
+    const { selectionPath } = prevState;
+    let selection = assetSelectionsFor(selectionPath)[index];
+    selectionPath.push(selection);
+
+    return Object.assign({}, prevState, {
+      assetSelections: selection.children,
+      selectionPath: selectionPath
+    });
+  }
+}
+
+function traverseBackwards(prevState, props) {
+  const { selectionPath } = prevState;
+  selectionPath.pop();
+
+  return Object.assign({}, prevState, {
+    assetSelections: assetSelectionsFor(selectionPath),
+    selectionPath: selectionPath
+  });
+}
+
+function assetSelectionsFor(selectionPath) {
+  if (selectionPath.length === 0) {
+    return userAssets;
+  }
+
+  return _.last(selectionPath).children;
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -56,36 +101,16 @@ class App extends Component {
   }
 
   handleClick(e, listItemProps) {
-    this.setState((prevState, props) => {
-      return {
-        assetSelection: this.assetAt(listItemProps.index)
-      }
-    });
+    this.setState(selectAssetAt(listItemProps.index));
   }
 
   drillInto(e, drillProps) {
     e.stopPropagation();
-    this.setState((prevState, props) => {
-      const { selectionPath } = prevState;
-      let assetSelections = this.assetSelectionsFor(selectionPath.length);
-      let selection = assetSelections[drillProps.index];
-      selectionPath.push(selection);
-      return Object.assign({}, prevState, {
-        assetSelections: selection.children,
-        selectionPath: selectionPath
-      });
-    });
+    this.setState(viewChildSelectionsAt(drillProps.index));
   }
 
   drillBack() {
-    this.setState((prevState, props) => {
-      const { selectionPath } = prevState;
-      selectionPath.pop();
-      return Object.assign({}, prevState, {
-        assetSelections: this.assetSelectionsFor(selectionPath.length),
-        selectionPath: selectionPath
-      });
-    });
+    this.setState(traverseBackwards);
   }
 
   isHomeSelected() {
@@ -93,9 +118,7 @@ class App extends Component {
   }
 
   removeAssetSelection() {
-    this.setState((prevState, props) => Object.assign({}, prevState, {
-      assetSelection: homeSelection
-    }));
+    this.setState(selectHome);
   }
 
   showParentHeader() {
@@ -121,18 +144,6 @@ class App extends Component {
         drillInto={this.drillInto}
       />
     );
-  }
-
-  assetSelectionsFor(depth) {
-    if (depth === 0) {
-      return userAssets;
-    }
-
-    return _.last(this.state.selectionPath).children;
-  }
-
-  assetAt(index) {
-    return this.state.assetSelections[index];
   }
 }
 
