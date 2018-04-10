@@ -100,6 +100,14 @@ class App extends Component {
     );
   }
 
+  isHomeSelected() {
+    return this.state.assetSelection.name === 'Home';
+  }
+
+  showParentHeader() {
+    return this.state.selectionPath.length > 0;
+  }
+
   handleClick(e, listItemProps) {
     this.setState(selectAssetAt(listItemProps.index));
   }
@@ -113,16 +121,8 @@ class App extends Component {
     this.setState(traverseBackwards);
   }
 
-  isHomeSelected() {
-    return this.state.assetSelection.name === 'Home';
-  }
-
   removeAssetSelection() {
     this.setState(selectHome);
-  }
-
-  showParentHeader() {
-    return this.state.selectionPath.length > 0;
   }
 
   renderParentHeader() {
