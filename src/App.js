@@ -6,14 +6,12 @@ import { Button, Grid, Label, List } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import AssetSelectionListItem from './AssetSelectionListItem.js';
-import MultiBuildingAsset from './MultiBuildingAsset.js';
+import { SingleBuildingAsset, MultiBuildingAsset, Portfolio } from './AssetSelections.js';
 import ParentHeader from './ParentHeader.js';
-import Portfolio from './Portfolio.js';
-import SingleBuildingAsset from './SingleBuildingAsset.js';
 
 const userAssets = [
   new Portfolio('East Coast Portfolio', '2 Assets'),
-  new MultiBuildingAsset('1204 6th Avenue', 'New York, NY'),
+  new MultiBuildingAsset('Midtown Office Park', 'New York, NY'),
   new SingleBuildingAsset('114 W 41 St.', 'New York, NY')
 ];
 
